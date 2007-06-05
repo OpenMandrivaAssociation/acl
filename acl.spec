@@ -1,6 +1,6 @@
 %define	name	acl
-%define	version	2.2.39
-%define	release	%mkrel 2
+%define	version	2.2.44
+%define	release	%mkrel 1
 
 %define	lib_name_orig	lib%{name}
 %define lib_major	1
