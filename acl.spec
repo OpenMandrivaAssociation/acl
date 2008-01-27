@@ -1,6 +1,6 @@
 %define	name	acl
 %define	version	2.2.45
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 
 %define	libname_orig	lib%{name}
 %define lib_major	1
@@ -11,7 +11,7 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Summary:	Command for manipulating access control lists
-License:	GPL
+License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
 Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.bz2
@@ -29,7 +29,7 @@ Group:		System/Libraries
 Provides:	%{libname_orig} = %{version}-%{release}
 
 %description -n	%{libname}
-This package contains the l%{libname_orig} dynamic library which contains
+This package contains the %{libname_orig} dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
 
@@ -38,7 +38,8 @@ Summary:	Access control list static libraries and headers
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	acl-devel = %{version}-%{release}
-Obsoletes:	%{develname} %mklibname -d %{name} 0
+Obsoletes:	%mklibname -d acl 0
+Obsoletes:	%mklibname -d acl 1
 
 %description -n	%{develname}
 This package contains static libraries and header files needed to develop
@@ -96,5 +97,3 @@ rm -rf %{buildroot}
 %dir %{_includedir}/acl
 %{_includedir}/acl/libacl.h
 %{_includedir}/sys/acl.h
-
-
