@@ -1,54 +1,53 @@
 %define	name	acl
-%define	version	2.2.44
-%define	release	%mkrel 3
+%define	version	2.2.45
+%define	release	%mkrel 1
 
-%define	lib_name_orig	lib%{name}
+%define	libname_orig	lib%{name}
 %define lib_major	1
-%define lib_name	%mklibname %{name} %{lib_major}
+%define libname	  %mklibname %{name} %{lib_major}
+%define develname %mklibname -d %{name}
 
-Summary:	Command for manipulating access control lists
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.bz2
+Summary:	Command for manipulating access control lists
 License:	GPL
 Group:		System/Kernel and hardware
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://oss.sgi.com/projects/xfs/
-Requires:	%{lib_name} = %{version}-%{release}
+Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.bz2
 BuildRequires:	attr-devel
 BuildRequires:	libtool
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 This package contains the getfacl and setfacl utilities needed for
 manipulating access control lists.
 
-%package -n	%{lib_name}
-Summary:	Main library for %{lib_name_orig}
+%package -n	%{libname}
+Summary:	Main library for %{libname_orig}
 Group:		System/Libraries
-Provides:	%{lib_name_orig} = %{version}-%{release}
+Provides:	%{libname_orig} = %{version}-%{release}
 
-%description -n	%{lib_name}
-This package contains the l%{lib_name_orig} dynamic library which contains
+%description -n	%{libname}
+This package contains the l%{libname_orig} dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
 
-%package -n	%{lib_name}-devel
+%package -n	%{develname}
 Summary:	Access control list static libraries and headers
 Group:		Development/C
-Requires:	%{lib_name} = %{version}-%{release}
-Provides:	%{lib_name_orig}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	acl-devel = %{version}-%{release}
-Obsoletes:	acl-devel
+Obsoletes:	%{develname} %mklibname -d %{name} 0
 
-%description -n	%{lib_name}-devel
+%description -n	%{develname}
 This package contains static libraries and header files needed to develop
 programs which make use of the access control list programming interface
 defined in POSIX 1003.1e draft standard 17.
 
-You should install %{lib_name}-devel if you want to develop programs
-which make use of ACLs.  If you install %{lib_name}-devel, you will
-also want to install %{lib_name}.
+You should install %{develname} if you want to develop programs
+which make use of ACLs.  If you install %{develname}, you will
+also want to install %{libname}.
 
 %prep
 %setup -q
@@ -59,7 +58,7 @@ aclocal && autoconf
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 make install-lib DIST_ROOT=%{buildroot}/
@@ -70,10 +69,10 @@ rm -rf %{buildroot}%{_docdir}/acl
 %find_lang %{name}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
-%post -n %{lib_name} -p /sbin/ldconfig
-%postun -n %{lib_name} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(-,root,root)
@@ -81,12 +80,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 %{_mandir}/man1/*
 
-%files -n %{lib_name}
+%files -n %{libname}
 %defattr(-,root,root)
 %doc doc/COPYING
 /%{_lib}/*.so.*
 
-%files -n %{lib_name}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc doc/extensions.txt doc/COPYING doc/libacl.txt
 /%{_lib}/*.so
