@@ -1,6 +1,6 @@
 %define	name	acl
 %define	version	2.2.45
-%define	release	%mkrel 2
+%define	release	%mkrel 3
 
 %define	libname_orig	lib%{name}
 %define lib_major	1
@@ -38,6 +38,7 @@ Summary:	Access control list static libraries and headers
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	acl-devel = %{version}-%{release}
+Provides:	libacl-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d acl 0
 Obsoletes:	%mklibname -d acl 1
 
