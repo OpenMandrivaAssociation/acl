@@ -1,5 +1,5 @@
 %define	name	acl
-%define	version	2.2.45
+%define	version	2.2.47
 %define	release	%mkrel 3
 
 %define	libname_orig	lib%{name}
@@ -11,10 +11,10 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Summary:	Command for manipulating access control lists
-License:	GPLv2+
+License:	GPLv2+ and LGPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
-Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.bz2
+Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
 BuildRequires:	attr-devel
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-%{version}
