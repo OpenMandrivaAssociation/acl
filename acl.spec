@@ -1,6 +1,6 @@
 %define	name	acl
 %define	version	2.2.47
-%define	release	%mkrel 6
+%define	release	%mkrel 7
 
 %define	libname_orig	lib%{name}
 %define lib_major	1
@@ -15,6 +15,7 @@ License:	GPLv2+ and LGPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
 Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
+Patch0:		acl_2.2.47-1-symlinks.patch
 BuildRequires:	attr-devel
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-%{version}
@@ -53,6 +54,7 @@ also want to install %{libname}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 aclocal && autoconf
