@@ -1,6 +1,6 @@
 %define	name	acl
-%define	version	2.2.47
-%define	release	%mkrel 7
+%define	version	2.2.48
+%define	release	%mkrel 1
 
 %define	libname_orig	lib%{name}
 %define lib_major	1
@@ -13,9 +13,8 @@ Release:	%{release}
 Summary:	Command for manipulating access control lists
 License:	GPLv2+ and LGPLv2
 Group:		System/Kernel and hardware
-URL:		http://oss.sgi.com/projects/xfs/
-Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
-Patch0:		acl_2.2.47-1-symlinks.patch
+URL:		http://savannah.nongnu.org/projects/acl
+Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
 BuildRequires:	attr-devel
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-%{version}
@@ -54,10 +53,8 @@ also want to install %{libname}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-aclocal && autoconf
 %configure2_5x --libdir=/%{_lib} --sbindir=/bin
 %make
 
