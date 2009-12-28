@@ -1,6 +1,6 @@
 %define	name	acl
 %define	version	2.2.49
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 
 %define	libname_orig	lib%{name}
 %define lib_major	1
@@ -15,6 +15,7 @@ License:	GPLv2+ and LGPLv2
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
+Patch0:		acl-2.2.48-CVE-2009-4411.diff
 BuildRequires:	attr-devel
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-%{version}
@@ -53,6 +54,7 @@ also want to install %{libname}.
 
 %prep
 %setup -q
+%patch0 -p0 -b .CVE-2009-4411
 
 %build
 %configure2_5x --libdir=/%{_lib} --sbindir=/bin
