@@ -1,6 +1,6 @@
 %define	name	acl
 %define	version	2.2.49
-%define	release	%mkrel 2
+%define	release	%mkrel 3
 
 %define	libname_orig	lib%{name}
 %define lib_major	1
@@ -86,6 +86,7 @@ rm -rf %{buildroot}
 %doc doc/CHANGES.gz doc/COPYING README
 %{_bindir}/*
 %{_mandir}/man1/*
+%{_mandir}/man5/*
 
 %files -n %{libname}
 %defattr(-,root,root)
@@ -99,7 +100,7 @@ rm -rf %{buildroot}
 /%{_lib}/*a
 %{_libdir}/*.so
 %{_libdir}/*a
-%{_mandir}/man[235]/*
+%{_mandir}/man3/*
 %dir %{_includedir}/acl
 %{_includedir}/acl/libacl.h
 %{_includedir}/sys/acl.h
