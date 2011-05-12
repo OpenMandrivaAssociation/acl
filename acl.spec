@@ -1,24 +1,20 @@
-%define	name	acl
-%define	version	2.2.49
-%define	release	%mkrel 5
-
 %define	libname_orig	lib%{name}
 %define lib_major	1
 %define libname	  %mklibname %{name} %{lib_major}
 %define develname %mklibname -d %{name}
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
 Summary:	Command for manipulating access control lists
+Name:		acl
+Version:	2.2.51
+Release:	%mkrel 1
 License:	GPLv2+ and LGPLv2
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
-Patch0:		acl-2.2.48-CVE-2009-4411.diff
+Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz.sig
 BuildRequires:	attr-devel
 BuildRequires:	libtool
-BuildRoot:	%{_tmppath}/%{name}-%{version}
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 This package contains the getfacl and setfacl utilities needed for
@@ -54,7 +50,6 @@ also want to install %{libname}.
 
 %prep
 %setup -q
-%patch0 -p0 -b .CVE-2009-4411
 
 %build
 %configure2_5x --libdir=/%{_lib} --sbindir=/bin
