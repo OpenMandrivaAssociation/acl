@@ -6,15 +6,14 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.51
-Release:	%mkrel 1
+Release:	2
 License:	GPLv2+ and LGPLv2
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
 Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz.sig
 BuildRequires:	attr-devel
-BuildRequires:	libtool
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	autoconf automake libtool
 
 %description
 This package contains the getfacl and setfacl utilities needed for
@@ -33,7 +32,7 @@ control lists.
 %package -n	%{develname}
 Summary:	Access control list static libraries and headers
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} >= %{version}-%{release}
 Provides:	acl-devel = %{version}-%{release}
 Provides:	libacl-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d acl 0
@@ -57,44 +56,32 @@ also want to install %{libname}.
 
 %install
 rm -rf %{buildroot}
+
 make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 make install-lib DIST_ROOT=%{buildroot}/
 
-perl -pi -e 's,\s(/%{_lib})(.*attr\.la),%{_libdir}/$2,g' %{buildroot}/%{_libdir}/%{_lib}acl.la
-
+# cleanup
 rm -rf %{buildroot}%{_docdir}/acl
+rm -f %{buildroot}/%{_lib}/*.*a
+rm -f %{buildroot}%{_libdir}/*.*a
+
 %find_lang %{name}
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc doc/CHANGES.gz doc/COPYING README
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 
 %files -n %{libname}
-%defattr(-,root,root)
 %doc doc/COPYING
 /%{_lib}/*.so.*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc doc/extensions.txt doc/COPYING doc/libacl.txt
 /%{_lib}/*.so
-/%{_lib}/*a
 %{_libdir}/*.so
-%{_libdir}/*a
 %{_mandir}/man3/*
 %dir %{_includedir}/acl
 %{_includedir}/acl/libacl.h
