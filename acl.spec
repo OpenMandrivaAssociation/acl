@@ -1,4 +1,3 @@
-%define	libname_orig	lib%{name}
 %define lib_major	1
 %define libname	  %mklibname %{name} %{lib_major}
 %define develname %mklibname -d %{name}
@@ -20,12 +19,11 @@ This package contains the getfacl and setfacl utilities needed for
 manipulating access control lists.
 
 %package -n	%{libname}
-Summary:	Main library for %{libname_orig}
+Summary:	Main library for libacl
 Group:		System/Libraries
-Provides:	%{libname_orig} = %{version}-%{release}
 
 %description -n	%{libname}
-This package contains the %{libname_orig} dynamic library which contains
+This package contains the libacl dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
 
@@ -34,7 +32,6 @@ Summary:	Access control list static libraries and headers
 Group:		Development/C
 Requires:	%{libname} >= %{version}-%{release}
 Provides:	acl-devel = %{version}-%{release}
-Provides:	libacl-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d acl 0
 Obsoletes:	%mklibname -d acl 1
 
