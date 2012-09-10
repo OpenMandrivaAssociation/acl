@@ -48,6 +48,7 @@ also want to install %{libname}.
 
 %prep
 %setup -q
+find -type f|xargs chmod o+r
 
 %build
 %configure2_5x --libdir=/%{_lib} --sbindir=/bin
@@ -58,8 +59,11 @@ make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 make install-lib DIST_ROOT=%{buildroot}/
 
+chmod 755 %{buildroot}/%{_lib}/libacl.so.%{major}.*
+
 # cleanup
 rm -rf %{buildroot}%{_docdir}/acl
+rm -f %{buildroot}%{_libdir}/*.*a
 rm -f %{buildroot}/%{_lib}/*.*a
 
 %find_lang %{name}
@@ -71,11 +75,11 @@ rm -f %{buildroot}/%{_lib}/*.*a
 %{_mandir}/man5/*
 
 %files -n %{libname}
-/%{_lib}/libacl.so.*
+%attr(755,root,root) /%{_lib}/libacl.so.%{major}*
 
 %files -n %{devname}
 %doc doc/extensions.txt doc/libacl.txt
-/%{_lib}/*.so
+/%{_lib}/libacl.so
 %{_libdir}/*.so
 %{_mandir}/man3/*
 %dir %{_includedir}/acl
