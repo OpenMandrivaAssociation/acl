@@ -120,9 +120,11 @@ make -C .system install-lib DIST_ROOT=%{buildroot}/
 
 # Remove unpackaged symlinks
 # TOdO: finish up spec-helper script ot automatically deal with
-ln -srf %{buildroot}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{_libdir}/libacl.so
+rm %{buildroot}%{_libdir}/libacl.so
+ln -sr %{buildroot}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{_libdir}/libacl.so
 
 rm -rf %{buildroot}%{_docdir}/acl
+rm %{buildroot}{/%{_lib},%{_libdir}}/*.a
 
 %find_lang %{name}
 
