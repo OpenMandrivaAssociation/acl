@@ -13,7 +13,6 @@ Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
 Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz.sig
-Patch0:		acl-2.2.51.patch
 BuildRequires:	attr-devel
 BuildRequires:	autoconf automake libtool
 %if %{with uclibc}
@@ -67,7 +66,6 @@ also want to install %{libname}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .libintl~
 find -type f|xargs chmod o+r
 
 %if %{with uclibc}
