@@ -17,7 +17,7 @@ Patch0:		acl-2.2.51.patch
 BuildRequires:	attr-devel
 BuildRequires:	autoconf automake libtool
 %if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-9
+BuildRequires:	uClibc-devel >= 0.9.33.2-16
 %endif
 
 %description
@@ -85,8 +85,7 @@ popd
 %build
 %if %{with uclibc}
 pushd .uclibc
-CFLAGS="%{uclibc_cflags}" \
-%configure2_5x	CC=%{uclibc_cc} \
+%uclibc_configure \
 		OPTIMIZER="%{uclibc_cflags}" \
 		--prefix=%{uclibc_root} \
 		--exec-prefix=%{uclibc_root} \
@@ -111,6 +110,7 @@ install -d %{buildroot}%{uclibc_root}%{_libdir}
 rm %{buildroot}%{uclibc_root}/%{_lib}/libacl.{a,la,so}
 ln -sr %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libacl.so
 mv %{buildroot}%{_libdir}/libacl.a %{buildroot}%{uclibc_root}%{_libdir}/libacl.a
+chmod 755 %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}*
 %endif
 
 make -C .system install DIST_ROOT=%{buildroot}/
@@ -122,6 +122,7 @@ make -C .system install-lib DIST_ROOT=%{buildroot}/
 # TOdO: finish up spec-helper script ot automatically deal with
 rm %{buildroot}%{_libdir}/libacl.so
 ln -sr %{buildroot}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{_libdir}/libacl.so
+chmod 755 %{buildroot}/%{_lib}/libacl.so.%{major}*
 
 rm -rf %{buildroot}%{_docdir}/acl
 rm %{buildroot}{/%{_lib},%{_libdir}}/*.a
@@ -135,11 +136,11 @@ rm %{buildroot}{/%{_lib},%{_libdir}}/*.a
 %{_mandir}/man5/*
 
 %files -n %{libname}
-%attr(755,root,root) /%{_lib}/libacl.so.%{major}*
+/%{_lib}/libacl.so.%{major}*
 
 %if %{with uclibc}
 %files -n uclibc-%{libname}
-%attr(755,root,root) %{uclibc_root}/%{_lib}/libacl.so.%{major}*
+%{uclibc_root}/%{_lib}/libacl.so.%{major}*
 %endif
 
 %files -n %{devname}
