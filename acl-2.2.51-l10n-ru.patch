@@ -1,0 +1,361 @@
+diff -urN acl-2.2.51.orig/po/Makefile acl-2.2.51/po/Makefile
+--- acl-2.2.51.orig/po/Makefile	2010-01-23 02:00:28.000000000 +0300
++++ acl-2.2.51/po/Makefile	2012-03-21 13:56:27.149799253 +0400
+@@ -20,7 +20,7 @@
+ include $(TOPDIR)/include/builddefs
+ 
+ POTHEAD = $(PKG_NAME).pot
+-LINGUAS ?= de es fr gl pl sv
++LINGUAS ?= de es fr gl pl sv ru
+ LSRCFILES = $(LINGUAS:%=%.po) $(POTHEAD)
+ LDIRT = $(POTHEAD)
+ 
+diff -urN acl-2.2.51.orig/po/ru.po acl-2.2.51/po/ru.po
+--- acl-2.2.51.orig/po/ru.po	1970-01-01 03:00:00.000000000 +0300
++++ acl-2.2.51/po/ru.po	2012-03-21 12:50:17.794799414 +0400
+@@ -0,0 +1,345 @@
++# Russian translation for acl.
++# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
++# This file is distributed under the same license as the acl package.
++# 
++# Translators:
++# Irina Sikach <i.sence.i@gmail.com>, 2012.
++msgid ""
++msgstr ""
++"Project-Id-Version: ROSA2011\n"
++"Report-Msgid-Bugs-To: \n"
++"POT-Creation-Date: 2011-04-19 10:54-0700\n"
++"PO-Revision-Date: 2012-01-29 20:55+0000\n"
++"Last-Translator: Irina Sikach <i.sence.i@gmail.com>\n"
++"Language-Team: Russian <l10n@rosalab.ru>\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=UTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++"Language: ru\n"
++"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
++
++#: ../chacl/chacl.c:46
++#, c-format
++msgid "Usage:\n"
++msgstr "Использование:\n"
++
++#: ../chacl/chacl.c:47
++#, c-format
++msgid "\t%s acl pathname...\n"
++msgstr ""
++"\t%s путь acl...\n"
++"\n"
++
++#: ../chacl/chacl.c:48
++#, c-format
++msgid "\t%s -b acl dacl pathname...\n"
++msgstr "\t%s -b путь acl dacl...\n"
++
++#: ../chacl/chacl.c:49
++#, c-format
++msgid "\t%s -d dacl pathname...\n"
++msgstr "\t%s -d путь dacl...\n"
++
++#: ../chacl/chacl.c:50
++#, c-format
++msgid "\t%s -R pathname...\n"
++msgstr "\t%s -R путь...\n"
++
++#: ../chacl/chacl.c:51
++#, c-format
++msgid "\t%s -D pathname...\n"
++msgstr "\t%s -D путь...\n"
++
++#: ../chacl/chacl.c:52
++#, c-format
++msgid "\t%s -B pathname...\n"
++msgstr "\t%s -B путь...\n"
++
++#: ../chacl/chacl.c:53
++#, c-format
++msgid "\t%s -l pathname...\t[not IRIX compatible]\n"
++msgstr "\t%s -l путь,,,\t[не совместим с IRIX]\n"
++
++#: ../chacl/chacl.c:55
++#, c-format
++msgid "\t%s -r pathname...\t[not IRIX compatible]\n"
++msgstr "\t%s -r путь...\t[не совместим с IRIX]\n"
++
++#: ../chacl/chacl.c:146
++#, c-format
++msgid "%s: error removing access acl on \"%s\": %s\n"
++msgstr "%s: ошибка при удалении доступа acl на \"%s\": %s\n"
++
++#: ../chacl/chacl.c:153
++#, c-format
++msgid "%s: error removing default acl on \"%s\": %s\n"
++msgstr "%s: ошибка при удаоении acl по умолчанию на \"%s\": %s\n"
++
++#: ../chacl/chacl.c:172 ../chacl/chacl.c:191
++#, c-format
++msgid "%s: access ACL '%s': %s at entry %d\n"
++msgstr "%s: доступ ACL '%s': %s при записи %d\n"
++
++#: ../chacl/chacl.c:259
++#, c-format
++msgid "%s: cannot get access ACL on '%s': %s\n"
++msgstr "%s: не удается получить доступ к ACL на '%s': %s\n"
++
++#: ../chacl/chacl.c:265
++#, c-format
++msgid "%s: cannot get default ACL on '%s': %s\n"
++msgstr "%s: не удается получить ACL по умолчанию на '%s': %s\n"
++
++#: ../chacl/chacl.c:271
++#, c-format
++msgid "%s: cannot get access ACL text on '%s': %s\n"
++msgstr "%s: не удается получить доступ к тексту ACL на '%s': %s\n"
++
++#: ../chacl/chacl.c:278
++#, c-format
++msgid "%s: cannot get default ACL text on '%s': %s\n"
++msgstr "%s: не удается получить текст по умолчания ACL на '%s': %s\n"
++
++#: ../chacl/chacl.c:304
++#, c-format
++msgid "%s: cannot set access acl on \"%s\": %s\n"
++msgstr "%s: не удается установить доступ к acl на \"%s\": %s\n"
++
++#: ../chacl/chacl.c:310
++#, c-format
++msgid "%s: cannot set default acl on \"%s\": %s\n"
++msgstr "%s: не удается установить acl по умолчанию на \"%s\": %s\n"
++
++#: ../chacl/chacl.c:328
++#, c-format
++msgid "%s: opendir failed: %s\n"
++msgstr "%s: ошибка opendir: %s\n"
++
++#: ../chacl/chacl.c:342
++#, c-format
++msgid "%s: malloc failed: %s\n"
++msgstr "%s: ошибка malloc: %s\n"
++
++#: ../setfacl/do_set.c:409
++#, c-format
++msgid "%s: %s: Malformed access ACL `%s': %s at entry %d\n"
++msgstr "%s: %s: Неправильный доступ к ACL `%s': %s при записи %d\n"
++
++#: ../setfacl/do_set.c:436
++#, c-format
++msgid "%s: %s: Malformed default ACL `%s': %s at entry %d\n"
++msgstr "%s: %s: Неправильный ACL по умолчанию `%s': %s при записи %d\n"
++
++#: ../setfacl/do_set.c:500
++#, c-format
++msgid "%s: %s: Only directories can have default ACLs\n"
++msgstr "%s: %s: Только папки могут иметь списки ACL по умолчанию\n"
++
++#: ../setfacl/setfacl.c:148
++#, c-format
++msgid "%s: %s: No filename found in line %d, aborting\n"
++msgstr "%s: %s: Не обнаружено имя файла в строке %d, прерывание\n"
++
++#: ../setfacl/setfacl.c:153
++#, c-format
++msgid "%s: No filename found in line %d of standard input, aborting\n"
++msgstr ""
++"%s: Не обнаружено имя файла в строке стандартного ввода %d , прерывание\n"
++
++#: ../setfacl/setfacl.c:174
++#, c-format
++msgid "%s: %s: %s in line %d\n"
++msgstr "%s: %s: %s в строке %d\n"
++
++#: ../setfacl/setfacl.c:206
++#, c-format
++msgid "%s: %s: Cannot change owner/group: %s\n"
++msgstr "%s: %s: Невозможно изменить владельца/группу: %s\n"
++
++#: ../setfacl/setfacl.c:225
++#, c-format
++msgid "%s: %s: Cannot change mode: %s\n"
++msgstr "%s: %s: Невозможно изменить режим: %s\n"
++
++#: ../setfacl/setfacl.c:267
++#, c-format
++msgid "%s %s -- set file access control lists\n"
++msgstr "%s %s -- установить списки контроля доступа файла\n"
++
++#: ../setfacl/setfacl.c:269 ../setfacl/setfacl.c:655
++#, c-format
++msgid "Usage: %s %s\n"
++msgstr "Использование: %s %s\n"
++
++#: ../setfacl/setfacl.c:272
++#, c-format
++msgid ""
++"  -m, --modify=acl        modify the current ACL(s) of file(s)\n"
++"  -M, --modify-file=file  read ACL entries to modify from file\n"
++"  -x, --remove=acl        remove entries from the ACL(s) of file(s)\n"
++"  -X, --remove-file=file  read ACL entries to remove from file\n"
++"  -b, --remove-all        remove all extended ACL entries\n"
++"  -k, --remove-default    remove the default ACL\n"
++msgstr ""
++"  -m, --modify=acl        изменяет текущий список(и) ACL файла(ов)\n"
++"  -M, --modify-file=file  rчитает записи ACL для изменения из файла\n"
++"  -x, --remove=acl        удаляет записи из списка(ов) ACL файла(ов)\n"
++"  -X, --remove-file=file  читает записи ACL для удаления из файла\n"
++"  -b, --remove-all        удаляет все расширенные записи ACL\n"
++"  -k, --remove-default    удаляет ACL по умолчанию\n"
++
++#: ../setfacl/setfacl.c:281
++#, c-format
++msgid ""
++"      --set=acl           set the ACL of file(s), replacing the current ACL\n"
++"      --set-file=file     read ACL entries to set from file\n"
++"      --mask              do recalculate the effective rights mask\n"
++msgstr ""
++"      --set=acl           устанавливает ACL файла(ов), заменяя текущий ACL\n"
++"      --set-file=file     читает записи ACL для установки из файла\n"
++"      --mask              выполяет пересчет маски эффективных прав\n"
++
++#: ../setfacl/setfacl.c:287
++#, c-format
++msgid ""
++"  -n, --no-mask           don't recalculate the effective rights mask\n"
++"  -d, --default           operations apply to the default ACL\n"
++msgstr ""
++"  -n, --no-mask           не пересчитывает маски эффективных прав\n"
++"  -d, --default           применяет операцию к ACL по умолчанию\n"
++
++#: ../setfacl/setfacl.c:292
++#, c-format
++msgid ""
++"  -R, --recursive         recurse into subdirectories\n"
++"  -L, --logical           logical walk, follow symbolic links\n"
++"  -P, --physical          physical walk, do not follow symbolic links\n"
++"      --restore=file      restore ACLs (inverse of `getfacl -R')\n"
++"      --test              test mode (ACLs are not modified)\n"
++msgstr ""
++"  -R, --recursive         рекурсивно в подкаталогах\n"
++"  -L, --logical           логический ход следует символической ссылке\n"
++"  -P, --physical          физический ход не следует символической ссылке\n"
++"      --restore=file      пересохраняет списки ACL (обратно `getfacl -R')\n"
++"      --test              тестовый режим (списки ACL не изменяются)\n"
++
++#: ../setfacl/setfacl.c:300 ../getfacl/getfacl.c:587
++#, c-format
++msgid ""
++"  -v, --version           print version and exit\n"
++"  -h, --help              this help text\n"
++msgstr ""
++"  -v, --version           версия для печати и выход\n"
++"  -h, --help              справка\n"
++
++#: ../setfacl/setfacl.c:317 ../getfacl/getfacl.c:729
++#, c-format
++msgid "%s: Standard input: %s\n"
++msgstr "%s: Стандартный ввод: %s\n"
++
++#: ../setfacl/setfacl.c:453
++#, c-format
++msgid "%s: Option -%c incomplete\n"
++msgstr "%s: Параметр -%c неполный\n"
++
++#: ../setfacl/setfacl.c:458
++#, c-format
++msgid "%s: Option -%c: %s near character %d\n"
++msgstr "%s: Параметр -%c: %s возле знака %d\n"
++
++#: ../setfacl/setfacl.c:534
++#, c-format
++msgid "%s: %s in line %d of file %s\n"
++msgstr "%s: %s в строке %d строки %s\n"
++
++#: ../setfacl/setfacl.c:542
++#, c-format
++msgid "%s: %s in line %d of standard input\n"
++msgstr "%s: %s в строке %d стандартного ввода\n"
++
++#: ../setfacl/setfacl.c:657 ../getfacl/getfacl.c:744
++#, c-format
++msgid "Try `%s --help' for more information.\n"
++msgstr "Попробуйте `%s --help' для получения более подробной информации.\n"
++
++#: ../getfacl/getfacl.c:489
++#, c-format
++msgid "%s: Removing leading '/' from absolute path names\n"
++msgstr "%s: Удаление '/' из имен абсолютных путей \n"
++
++#: ../getfacl/getfacl.c:560
++#, c-format
++msgid "%s %s -- get file access control lists\n"
++msgstr "%s %s -- полусить списки контроля доступа файла\n"
++
++#: ../getfacl/getfacl.c:562 ../getfacl/getfacl.c:742
++#, c-format
++msgid "Usage: %s [-%s] file ...\n"
++msgstr "Использование: %s [-%s] файл ...\n"
++
++#: ../getfacl/getfacl.c:568
++#, c-format
++msgid "  -d, --default           display the default access control list\n"
++msgstr ""
++"  -d, --default           отображает список контроля доступа по умолчанию\n"
++
++#: ../getfacl/getfacl.c:572
++#, c-format
++msgid ""
++"  -a,  --access           display the file access control list only\n"
++"  -d, --default           display the default access control list only\n"
++"  -c, --omit-header       do not display the comment header\n"
++"  -e, --all-effective     print all effective rights\n"
++"  -E, --no-effective      print no effective rights\n"
++"  -s, --skip-base         skip files that only have the base entries\n"
++"  -R, --recursive         recurse into subdirectories\n"
++"  -L, --logical           logical walk, follow symbolic links\n"
++"  -P, --physical          physical walk, do not follow symbolic links\n"
++"  -t, --tabular           use tabular output format\n"
++"  -n, --numeric           print numeric user/group identifiers\n"
++"  -p, --absolute-names    don't strip leading '/' in pathnames\n"
++msgstr ""
++"  -a,  --access           отображает только список контроля доступа  файла\n"
++"  -d, --default           отображает только список контроля доступа по умолчанию\n"
++"  -c, --omit-header       не отображает заголовок комментариев\n"
++"  -e, --all-effective     печать всех эффективных прав\n"
++"  -E, --no-effective      печать не эффективных праав\n"
++"  -s, --skip-base         пропускает файлы, которые имеют только базовые записи\n"
++"  -R, --recursive         рекурсивно в подкаталогах\n"
++"  -L, --logical           логический ход следует символическим ссылкам\n"
++"  -P, --physical          физический ход не следует символическим ссылкам\n"
++"  -t, --tabular           использовать табличный формат вывода\n"
++"  -n, --numeric           печатает числовой идентификатор пользователя/группы\n"
++"  -p, --absolute-names    не удалять '/' в пути\n"
++
++#: ../libacl/acl_error.c:34
++msgid "Multiple entries of same type"
++msgstr "Несколько записей того же типа"
++
++#: ../libacl/acl_error.c:36
++msgid "Duplicate entries"
++msgstr "Повторяющиеся записи"
++
++#: ../libacl/acl_error.c:38
++msgid "Missing or wrong entry"
++msgstr "Запись отсутствует или введена неправильно"
++
++#: ../libacl/acl_error.c:40
++msgid "Invalid entry type"
++msgstr "Недоступный тип записи"
++
++#: ../libacl/perm_copy_fd.c:124 ../libacl/perm_copy_fd.c:136
++#: ../libacl/perm_copy_fd.c:198 ../libacl/perm_copy_file.c:124
++#: ../libacl/perm_copy_file.c:139 ../libacl/perm_copy_file.c:150
++#: ../libacl/perm_copy_file.c:235
++#, c-format
++msgid "setting permissions for %s"
++msgstr "установка прав для %s"
++
++#: ../libacl/perm_copy_fd.c:186 ../libacl/perm_copy_file.c:199
++#: ../libacl/perm_copy_file.c:224
++#, c-format
++msgid "preserving permissions for %s"
++msgstr "сохранение прав для %s"
++
++
