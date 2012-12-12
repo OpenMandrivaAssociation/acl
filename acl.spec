@@ -1,12 +1,14 @@
-%define lib_major 1
-%define libname %mklibname %{name} %{lib_major}
-%define develname %mklibname -d %{name}
+%define	major	1
+%define	libname	%mklibname %{name} %{major}
+%define	devname	%mklibname -d %{name}
+
+%bcond_without	uclibc
 
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.51
-Release:	8
-License:	GPLv2+ and LGPLv2
+Release:	9
+License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
@@ -14,6 +16,9 @@ Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.sr
 Patch0:		acl-2.2.51-l10n-ru.patch
 BuildRequires:	attr-devel
 BuildRequires:	autoconf automake libtool
+%if %{with uclibc}
+BuildRequires:	uClibc-devel >= 0.9.33.2-16
+%endif
 
 %description
 This package contains the getfacl and setfacl utilities needed for
@@ -22,79 +27,151 @@ manipulating access control lists.
 %package -n	%{libname}
 Summary:	Main library for libacl
 Group:		System/Libraries
+License:	LGPLv2
 
 %description -n	%{libname}
 This package contains the libacl dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
 
-%package -n	%{develname}
+%package -n	uclibc-%{libname}
+Summary:	Main library for libacl (uClibc linked)
+Group:		System/Libraries
+License:	LGPLv2
+
+%description -n	uclibc-%{libname}
+This package contains the libacl dynamic library which contains
+the POSIX 1003.1e draft standard 17 functions for manipulating access
+control lists.
+
+%package -n	%{devname}
 Summary:	Access control list static libraries and headers
 Group:		Development/C
+License:	LGPLv2
 Requires:	%{libname} >= %{version}-%{release}
+%if %{with uclibc}
+Requires:	uclibc-%{libname} = %{version}-%{release}
+%endif
 Provides:	acl-devel = %{version}-%{release}
-Obsoletes:	%{mklibname -d acl 0} < %{version}-%{release}
-Obsoletes:	%{mklibname -d acl 1} < %{version}-%{release}
+Obsoletes:	%mklibname -d acl 0
+Obsoletes:	%mklibname -d acl 1
 
-%description -n	%{develname}
+%description -n	%{devname}
 This package contains static libraries and header files needed to develop
 programs which make use of the access control list programming interface
 defined in POSIX 1003.1e draft standard 17.
 
-You should install %{develname} if you want to develop programs
-which make use of ACLs. If you install %{develname}, you will
+You should install %{devname} if you want to develop programs
+which make use of ACLs.  If you install %{devname}, you will
 also want to install %{libname}.
 
 %prep
 %setup -q
 %patch0 -p1
 
-# Fix unreadable files
-find . -perm 0640 -exec chmod 0644 '{}' \;
+find -type f|xargs chmod o+r
+
+%if %{with uclibc}
+mkdir .uclibc
+pushd .uclibc
+cp -a ../* .
+popd
+%endif
+
+mkdir .system
+pushd .system
+cp -a ../* .
+popd
 
 %build
-%configure2_5x \
-	--libdir=/%{_lib} \
-	--sbindir=/bin \
-	--disable-static
+%if %{with uclibc}
+pushd .uclibc
+%uclibc_configure \
+		OPTIMIZER="%{uclibc_cflags}" \
+		--prefix=%{uclibc_root} \
+		--exec-prefix=%{uclibc_root} \
+		--libdir=%{uclibc_root}/%{_lib} \
+		--enable-shared \
+		--enable-gettext \
+		--with-sysroot=%{uclibc_root}
+popd
+%endif
+
+pushd .system
+CFLAGS="%{optflags}" \
+%configure2_5x --libdir=/%{_lib} --sbindir=/bin
 %make
+popd
 
 %install
-make install DIST_ROOT=%{buildroot}/
-make install-dev DIST_ROOT=%{buildroot}/
-make install-lib DIST_ROOT=%{buildroot}/
+%if %{with uclibc}
+make -C .uclibc install-lib DIST_ROOT=%{buildroot}
+make -C .uclibc install-dev DIST_ROOT=%{buildroot}
+install -d %{buildroot}%{uclibc_root}%{_libdir}
+rm %{buildroot}%{uclibc_root}/%{_lib}/libacl.{a,la,so}
+ln -sr %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libacl.so
+mv %{buildroot}%{_libdir}/libacl.a %{buildroot}%{uclibc_root}%{_libdir}/libacl.a
+chmod 755 %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}*
+%endif
 
-# cleanup
-rm -f %{buildroot}/%{_lib}/*.a
-rm -f %{buildroot}/%{_lib}/*.la
+make -C .system install DIST_ROOT=%{buildroot}/
+make -C .system install-dev DIST_ROOT=%{buildroot}/
+make -C .system install-lib DIST_ROOT=%{buildroot}/
+
+
+# Remove unpackaged symlinks
+# TOdO: finish up spec-helper script ot automatically deal with
+rm %{buildroot}%{_libdir}/libacl.so
+ln -sr %{buildroot}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{_libdir}/libacl.so
+chmod 755 %{buildroot}/%{_lib}/libacl.so.%{major}*
+
 rm -rf %{buildroot}%{_docdir}/acl
-
-# To avoid unstripped-binary-or-object rpmlint error
-chmod 0755 %{buildroot}/%{_lib}/*.so.%{lib_major}*
+rm %{buildroot}{/%{_lib},%{_libdir}}/*.a
 
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc doc/CHANGES.gz doc/COPYING README
+%doc .uclibc/doc/CHANGES.gz README
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 
 %files -n %{libname}
-%doc doc/COPYING
-/%{_lib}/*.so.%{lib_major}*
+/%{_lib}/libacl.so.%{major}*
 
-%files -n %{develname}
-%doc doc/extensions.txt doc/COPYING doc/libacl.txt
-/%{_lib}/*.so
-%{_libdir}/*.so
+%if %{with uclibc}
+%files -n uclibc-%{libname}
+%{uclibc_root}/%{_lib}/libacl.so.%{major}*
+%endif
+
+%files -n %{devname}
+%doc doc/extensions.txt doc/libacl.txt
+/%{_lib}/libacl.so
+%{_libdir}/libacl.so
+%if %{with uclibc}
+%{uclibc_root}%{_libdir}/libacl.a
+%{uclibc_root}%{_libdir}/libacl.so
+%endif
 %{_mandir}/man3/*
 %dir %{_includedir}/acl
 %{_includedir}/acl/libacl.h
 %{_includedir}/sys/acl.h
 
 %changelog
-* Wed Mar 07 2012 Per Ã˜yvind Karlsen <peroyvind@mandriva.org> 2.2.51-3
+* Wed Dec 12 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.2.51-9
+- rebuild on ABF
+
+* Sun Oct 28 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.2.51-5
++ Revision: 820211
+- drop libintl patch, uclibc libc.so linker script now automatically pulls it in
+- fix uClibc build
+- fix symlinkng of libacl.so
+- do uClibc build
+- fix file permissions
+- cleanup a bit
+- be more explicit about license and ditch shipping COPYING
+
+* Wed Mar 07 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.2.51-3
 + Revision: 782648
 - drop excessive provides
 
