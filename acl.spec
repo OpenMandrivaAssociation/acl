@@ -14,6 +14,7 @@ URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
 Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz.sig
 Patch0:		acl-2.2.51-l10n-ru.patch
+Patch1:		acl-aarch64.patch
 BuildRequires:	attr-devel
 BuildRequires:	autoconf automake libtool
 %if %{with uclibc}
@@ -68,6 +69,7 @@ also want to install %{libname}.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 find -type f|xargs chmod o+r
 
