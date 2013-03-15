@@ -133,7 +133,9 @@ rm %{buildroot}{/%{_lib},%{_libdir}}/*.a
 %find_lang %{name}
 
 %files -f %{name}.lang
+%if %{with uclibc}
 %doc .uclibc/doc/CHANGES.gz README
+%endif
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_mandir}/man5/*
