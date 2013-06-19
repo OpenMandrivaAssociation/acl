@@ -6,15 +6,14 @@
 
 Summary:	Command for manipulating access control lists
 Name:		acl
-Version:	2.2.51
-Release:	9
+Version:	2.2.52
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
 Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz.sig
 Patch0:		acl-2.2.51-l10n-ru.patch
-Patch1:		acl-aarch64.patch
 BuildRequires:	attr-devel
 BuildRequires:	autoconf automake libtool
 %if %{with uclibc}
@@ -68,8 +67,7 @@ also want to install %{libname}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%apply_patches
 
 find -type f|xargs chmod o+r
 
