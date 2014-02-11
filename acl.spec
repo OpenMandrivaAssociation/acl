@@ -86,11 +86,13 @@ popd
 %build
 %if %{with uclibc}
 pushd .uclibc
+# upstream has a weird idea about what libexecdir is
 %uclibc_configure \
 		OPTIMIZER="%{uclibc_cflags}" \
 		--prefix=%{uclibc_root} \
 		--exec-prefix=%{uclibc_root} \
 		--libdir=%{uclibc_root}/%{_lib} \
+		--libexecdir=%{uclibc_root}/%{_lib} \
 		--enable-shared \
 		--enable-gettext \
 		--with-sysroot=%{uclibc_root}
@@ -98,8 +100,9 @@ popd
 %endif
 
 pushd .system
+# upstream has a weird idea about what libexecdir is
 CFLAGS="%{optflags}" \
-%configure2_5x --libdir=/%{_lib} --sbindir=/bin
+%configure2_5x --libdir=/%{_lib} --libexecdir=/%{_lib} --sbindir=/bin
 %make
 popd
 
@@ -119,13 +122,12 @@ make -C .system install-lib DIST_ROOT=%{buildroot}/
 
 
 # Remove unpackaged symlinks
-# TOdO: finish up spec-helper script ot automatically deal with
-rm %{buildroot}%{_libdir}/libacl.so
+# TODO: finish up spec-helper script to automatically deal with this
+mkdir -p %{buildroot}%{_libdir}
 ln -sr %{buildroot}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{_libdir}/libacl.so
 chmod 755 %{buildroot}/%{_lib}/libacl.so.%{major}*
 
-rm -rf %{buildroot}%{_docdir}/acl
-rm -f  %{buildroot}{/%{_lib},%{_libdir}}/*.a
+rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 
 %find_lang %{name}
 
