@@ -102,7 +102,7 @@ popd
 pushd .system
 # upstream has a weird idea about what libexecdir is
 CFLAGS="%{optflags}" \
-%configure2_5x --libdir=/%{_lib} --libexecdir=/%{_lib} --sbindir=/bin
+%configure --libdir=/%{_lib} --libexecdir=/%{_lib} --sbindir=/bin
 %make
 popd
 
@@ -111,7 +111,7 @@ popd
 make -C .uclibc install-lib DIST_ROOT=%{buildroot}
 make -C .uclibc install-dev DIST_ROOT=%{buildroot}
 install -d %{buildroot}%{uclibc_root}%{_libdir}
-rm  %{buildroot}%{uclibc_root}/%{_lib}/libacl.{a,la,so}
+rm  %{buildroot}%{uclibc_root}/%{_lib}/libacl.{la,so}
 ln -sr %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libacl.so
 chmod 755 %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}*
 %endif
