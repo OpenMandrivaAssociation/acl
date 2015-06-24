@@ -7,12 +7,13 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.52
-Release:	9
+Release:	10
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
 Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz.sig
+Source2:	%{name}.rpmlintrc
 Patch0:		acl-2.2.51-l10n-ru.patch
 BuildRequires:	attr-devel
 BuildRequires:	autoconf automake libtool
@@ -34,6 +35,7 @@ This package contains the libacl dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
 
+%if %{with uclibc}
 %package -n	uclibc-%{libname}
 Summary:	Main library for libacl (uClibc linked)
 Group:		System/Libraries
@@ -43,6 +45,25 @@ License:	LGPLv2
 This package contains the libacl dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
+
+%package -n	uclibc-%{devname}
+Summary:	Access control list static libraries and headers
+Group:		Development/C
+License:	LGPLv2
+Requires:	uclibc-%{libname} >= %{EVRD}
+Requires:	%{devname} = %{EVRD}
+Provides:	uclibc-acl-devel = %{EVRD}
+Conflicts:	%{devname} < 2.2.52-10
+
+%description -n	uclibc-%{devname}
+This package contains static libraries and header files needed to develop
+programs which make use of the access control list programming interface
+defined in POSIX 1003.1e draft standard 17.
+
+You should install %{devname} if you want to develop programs
+which make use of ACLs.  If you install %{devname}, you will
+also want to install %{libname}.
+%endif
 
 %package -n	%{devname}
 Summary:	Access control list static libraries and headers
@@ -145,15 +166,15 @@ rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 %if %{with uclibc}
 %files -n uclibc-%{libname}
 %{uclibc_root}/%{_lib}/libacl.so.%{major}*
+
+%files -n uclibc-%{devname}
+%{uclibc_root}%{_libdir}/libacl.so
 %endif
 
 %files -n %{devname}
 %doc doc/extensions.txt doc/libacl.txt
 /%{_lib}/libacl.so
 %{_libdir}/libacl.so
-%if %{with uclibc}
-%{uclibc_root}%{_libdir}/libacl.so
-%endif
 %{_mandir}/man3/*
 %dir %{_includedir}/acl
 %{_includedir}/acl/libacl.h
