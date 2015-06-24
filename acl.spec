@@ -7,7 +7,7 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.52
-Release:	10
+Release:	11
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
@@ -19,6 +19,7 @@ BuildRequires:	attr-devel
 BuildRequires:	autoconf automake libtool
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-16
+BuildRequires:	uclibc-attr-devel
 %endif
 
 %description
