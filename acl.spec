@@ -7,7 +7,7 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.52
-Release:	11
+Release:	12
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
@@ -71,9 +71,6 @@ Summary:	Access control list static libraries and headers
 Group:		Development/C
 License:	LGPLv2
 Requires:	%{libname} >= %{version}-%{release}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{version}-%{release}
-%endif
 Provides:	acl-devel = %{version}-%{release}
 Obsoletes:	%mklibname -d acl 0
 Obsoletes:	%mklibname -d acl 1
