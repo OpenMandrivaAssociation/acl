@@ -2,12 +2,12 @@
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname -d %{name}
 
-%bcond_without	uclibc
+%bcond_with	uclibc
 
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.52
-Release:	13
+Release:	14
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
