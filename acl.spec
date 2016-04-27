@@ -2,12 +2,10 @@
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname -d %{name}
 
-%bcond_with	uclibc
-
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.52
-Release:	14
+Release:	15
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
@@ -16,11 +14,9 @@ Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.sr
 Source2:	%{name}.rpmlintrc
 Patch0:		acl-2.2.51-l10n-ru.patch
 BuildRequires:	attr-devel
-BuildRequires:	autoconf automake libtool
-%if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-16
-BuildRequires:	uclibc-attr-devel
-%endif
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool
 
 %description
 This package contains the getfacl and setfacl utilities needed for
@@ -35,36 +31,6 @@ License:	LGPLv2
 This package contains the libacl dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
-
-%if %{with uclibc}
-%package -n	uclibc-%{libname}
-Summary:	Main library for libacl (uClibc linked)
-Group:		System/Libraries
-License:	LGPLv2
-
-%description -n	uclibc-%{libname}
-This package contains the libacl dynamic library which contains
-the POSIX 1003.1e draft standard 17 functions for manipulating access
-control lists.
-
-%package -n	uclibc-%{devname}
-Summary:	Access control list static libraries and headers
-Group:		Development/C
-License:	LGPLv2
-Requires:	uclibc-%{libname} >= %{EVRD}
-Requires:	%{devname} = %{EVRD}
-Provides:	uclibc-acl-devel = %{EVRD}
-Conflicts:	%{devname} < 2.2.52-10
-
-%description -n	uclibc-%{devname}
-This package contains static libraries and header files needed to develop
-programs which make use of the access control list programming interface
-defined in POSIX 1003.1e draft standard 17.
-
-You should install %{devname} if you want to develop programs
-which make use of ACLs.  If you install %{devname}, you will
-also want to install %{libname}.
-%endif
 
 %package -n	%{devname}
 Summary:	Access control list static libraries and headers
@@ -90,55 +56,17 @@ also want to install %{libname}.
 
 find -type f|xargs chmod o+r
 
-%if %{with uclibc}
-mkdir .uclibc
-pushd .uclibc
-cp -a ../* .
-popd
-%endif
-
-mkdir .system
-pushd .system
-cp -a ../* .
-popd
 
 %build
-%if %{with uclibc}
-pushd .uclibc
-# upstream has a weird idea about what libexecdir is
-%uclibc_configure \
-		OPTIMIZER="%{uclibc_cflags}" \
-		--prefix=%{uclibc_root} \
-		--exec-prefix=%{uclibc_root} \
-		--libdir=%{uclibc_root}/%{_lib} \
-		--libexecdir=%{uclibc_root}/%{_lib} \
-		--enable-shared \
-		--enable-gettext \
-		--with-sysroot=%{uclibc_root}
-popd
-%endif
-
-pushd .system
 # upstream has a weird idea about what libexecdir is
 CFLAGS="%{optflags}" \
 %configure --libdir=/%{_lib} --libexecdir=/%{_lib} --sbindir=/bin
 %make
-popd
 
 %install
-%if %{with uclibc}
-make -C .uclibc install-lib DIST_ROOT=%{buildroot}
-make -C .uclibc install-dev DIST_ROOT=%{buildroot}
-install -d %{buildroot}%{uclibc_root}%{_libdir}
-rm  %{buildroot}%{uclibc_root}/%{_lib}/libacl.{la,so}
-ln -sr %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libacl.so
-chmod 755 %{buildroot}/%{uclibc_root}/%{_lib}/libacl.so.%{major}*
-%endif
-
-make -C .system install DIST_ROOT=%{buildroot}/
-make -C .system install-dev DIST_ROOT=%{buildroot}/
-make -C .system install-lib DIST_ROOT=%{buildroot}/
-
+make install DIST_ROOT=%{buildroot}/
+make install-dev DIST_ROOT=%{buildroot}/
+make install-lib DIST_ROOT=%{buildroot}/
 
 # Remove unpackaged symlinks
 # TODO: finish up spec-helper script to automatically deal with this
@@ -151,23 +79,12 @@ rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 %find_lang %{name}
 
 %files -f %{name}.lang
-%if %{with uclibc}
-%doc .uclibc/doc/CHANGES.gz README
-%endif
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_mandir}/man5/*
 
 %files -n %{libname}
 /%{_lib}/libacl.so.%{major}*
-
-%if %{with uclibc}
-%files -n uclibc-%{libname}
-%{uclibc_root}/%{_lib}/libacl.so.%{major}*
-
-%files -n uclibc-%{devname}
-%{uclibc_root}%{_libdir}/libacl.so
-%endif
 
 %files -n %{devname}
 %doc doc/extensions.txt doc/libacl.txt
