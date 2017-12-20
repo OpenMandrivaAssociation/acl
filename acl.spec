@@ -5,7 +5,7 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.52
-Release:	15
+Release:	16
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
@@ -38,8 +38,8 @@ Group:		Development/C
 License:	LGPLv2
 Requires:	%{libname} >= %{version}-%{release}
 Provides:	acl-devel = %{version}-%{release}
-Obsoletes:	%mklibname -d acl 0
-Obsoletes:	%mklibname -d acl 1
+Obsoletes:	%{mklibname -d acl 0} < 2.2.52-16
+Obsoletes:	%{mklibname -d acl 1} < 2.2.52-16
 
 %description -n	%{devname}
 This package contains static libraries and header files needed to develop
@@ -55,7 +55,6 @@ also want to install %{libname}.
 %apply_patches
 
 find -type f|xargs chmod o+r
-
 
 %build
 # upstream has a weird idea about what libexecdir is
