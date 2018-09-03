@@ -4,13 +4,13 @@
 
 Summary:	Command for manipulating access control lists
 Name:		acl
-Version:	2.2.52
-Release:	16
+Version:	2.2.53
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
-Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz
-Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.src.tar.gz.sig
+Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
+Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz.sig
 Source2:	%{name}.rpmlintrc
 Patch0:		acl-2.2.51-l10n-ru.patch
 BuildRequires:	attr-devel
@@ -63,15 +63,14 @@ CFLAGS="%{optflags}" \
 %make
 
 %install
-make install DIST_ROOT=%{buildroot}/
-make install-dev DIST_ROOT=%{buildroot}/
-make install-lib DIST_ROOT=%{buildroot}/
+%make_install
 
 # Remove unpackaged symlinks
 # TODO: finish up spec-helper script to automatically deal with this
 mkdir -p %{buildroot}%{_libdir}
 ln -sr %{buildroot}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{_libdir}/libacl.so
 chmod 755 %{buildroot}/%{_lib}/libacl.so.%{major}*
+mv %{buildroot}/%{_lib}/pkgconfig %{buildroot}%{_libdir}
 
 rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 
@@ -93,3 +92,4 @@ rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 %dir %{_includedir}/acl
 %{_includedir}/acl/libacl.h
 %{_includedir}/sys/acl.h
+%{_libdir}/pkgconfig/*.pc

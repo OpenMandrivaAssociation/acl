@@ -1,15 +1,3 @@
-diff -urN acl-2.2.51.orig/po/Makefile acl-2.2.51/po/Makefile
---- acl-2.2.51.orig/po/Makefile	2010-01-23 02:00:28.000000000 +0300
-+++ acl-2.2.51/po/Makefile	2012-03-21 13:56:27.149799253 +0400
-@@ -20,7 +20,7 @@
- include $(TOPDIR)/include/builddefs
- 
- POTHEAD = $(PKG_NAME).pot
--LINGUAS ?= de es fr gl pl sv
-+LINGUAS ?= de es fr gl pl sv ru
- LSRCFILES = $(LINGUAS:%=%.po) $(POTHEAD)
- LDIRT = $(POTHEAD)
- 
 diff -urN acl-2.2.51.orig/po/ru.po acl-2.2.51/po/ru.po
 --- acl-2.2.51.orig/po/ru.po	1970-01-01 03:00:00.000000000 +0300
 +++ acl-2.2.51/po/ru.po	2012-03-21 12:50:17.794799414 +0400
@@ -359,3 +347,11 @@ diff -urN acl-2.2.51.orig/po/ru.po acl-2.2.51/po/ru.po
 +msgstr "сохранение прав для %s"
 +
 +
+diff -up acl-2.2.53/po/LINGUAS.omv~ acl-2.2.53/po/LINGUAS
+--- acl-2.2.53/po/LINGUAS.omv~	2018-09-04 01:49:56.788388641 +0200
++++ acl-2.2.53/po/LINGUAS	2018-09-04 01:50:01.139331499 +0200
+@@ -1,3 +1,3 @@
+-de es fr gl pl sv
++de es fr gl pl ru sv
+ en@boldquot
+ en@quot
