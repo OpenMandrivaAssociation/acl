@@ -1,11 +1,11 @@
-%define	major	1
-%define	libname	%mklibname %{name} %{major}
-%define	devname	%mklibname -d %{name}
+%define major 1
+%define libname %mklibname %{name} %{major}
+%define devname %mklibname -d %{name}
 
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.2.53
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
@@ -22,17 +22,17 @@ BuildRequires:	libtool
 This package contains the getfacl and setfacl utilities needed for
 manipulating access control lists.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Main library for libacl
 Group:		System/Libraries
 License:	LGPLv2
 
-%description -n	%{libname}
+%description -n %{libname}
 This package contains the libacl dynamic library which contains
 the POSIX 1003.1e draft standard 17 functions for manipulating access
 control lists.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Access control list static libraries and headers
 Group:		Development/C
 License:	LGPLv2
@@ -41,7 +41,7 @@ Provides:	acl-devel = %{version}-%{release}
 Obsoletes:	%{mklibname -d acl 0} < 2.2.52-16
 Obsoletes:	%{mklibname -d acl 1} < 2.2.52-16
 
-%description -n	%{devname}
+%description -n %{devname}
 This package contains static libraries and header files needed to develop
 programs which make use of the access control list programming interface
 defined in POSIX 1003.1e draft standard 17.
@@ -51,8 +51,7 @@ which make use of ACLs.  If you install %{devname}, you will
 also want to install %{libname}.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 find -type f|xargs chmod o+r
 
@@ -60,7 +59,7 @@ find -type f|xargs chmod o+r
 # upstream has a weird idea about what libexecdir is
 CFLAGS="%{optflags}" \
 %configure --libdir=/%{_lib} --libexecdir=/%{_lib} --sbindir=/bin
-%make
+%make_build
 
 %install
 %make_install
