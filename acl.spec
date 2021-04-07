@@ -4,18 +4,14 @@
 
 Summary:	Command for manipulating access control lists
 Name:		acl
-Version:	2.2.53
-Release:	4
+Version:	2.3.1
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
-Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz
-Source1:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.gz.sig
+Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.xz
 Source2:	%{name}.rpmlintrc
 Patch0:		acl-2.2.51-l10n-ru.patch
-# (tpg) patches from upstream
-Patch1:		0000-__acl_create_entry_obj-do-not-break-strict-aliasing-.patch
-Patch2:		0001-acl_from_mode-acl_copy_int-Fix-segfault-on-allocatio.patch
 BuildRequires:	pkgconfig(libattr)
 BuildRequires:	autoconf
 BuildRequires:	automake
