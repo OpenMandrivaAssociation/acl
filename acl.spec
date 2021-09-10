@@ -5,7 +5,7 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.3.1
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
@@ -76,8 +76,8 @@ rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 
 %files -f %{name}.lang
 %{_bindir}/*
-%{_mandir}/man1/*
-%{_mandir}/man5/*
+%doc %{_mandir}/man1/*
+%doc %{_mandir}/man5/*
 
 %files -n %{libname}
 /%{_lib}/libacl.so.%{major}*
@@ -86,7 +86,7 @@ rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 %doc doc/extensions.txt doc/libacl.txt
 /%{_lib}/libacl.so
 %{_libdir}/libacl.so
-%{_mandir}/man3/*
+%doc %{_mandir}/man3/*
 %dir %{_includedir}/acl
 %{_includedir}/acl/libacl.h
 %{_includedir}/sys/acl.h
