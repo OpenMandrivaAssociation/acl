@@ -5,7 +5,7 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.3.1
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
@@ -55,22 +55,17 @@ also want to install %{libname}.
 find -type f|xargs chmod o+r
 
 %build
-# upstream has a weird idea about what libexecdir is
-CFLAGS="%{optflags}" \
-%configure --libdir=/%{_lib} --libexecdir=/%{_lib} --sbindir=/bin
+%configure
 %make_build
 
 %install
 %make_install
 
-# Remove unpackaged symlinks
-# TODO: finish up spec-helper script to automatically deal with this
-mkdir -p %{buildroot}%{_libdir}
-ln -sr %{buildroot}/%{_lib}/libacl.so.%{major}.* %{buildroot}%{_libdir}/libacl.so
-chmod 755 %{buildroot}/%{_lib}/libacl.so.%{major}*
-mv %{buildroot}/%{_lib}/pkgconfig %{buildroot}%{_libdir}
-
-rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
+# get rid of these
+rm -rf %{buildroot}%{_docdir}/acl
+rm -f %{buildroot}%{_libdir}/libacl.a
+rm -f %{buildroot}%{_libdir}/libacl.la
+chmod 0755 %{buildroot}/%{_libdir}/libacl.so.*.*.*
 
 %find_lang %{name}
 
@@ -80,11 +75,10 @@ rm -rf %{buildroot}%{_docdir}/acl %{buildroot}/%{_lib}/*.a
 %doc %{_mandir}/man5/*
 
 %files -n %{libname}
-/%{_lib}/libacl.so.%{major}*
+%{_libdir}/libacl.so.%{major}*
 
 %files -n %{devname}
 %doc doc/extensions.txt doc/libacl.txt
-/%{_lib}/libacl.so
 %{_libdir}/libacl.so
 %doc %{_mandir}/man3/*
 %dir %{_includedir}/acl
