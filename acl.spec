@@ -5,7 +5,7 @@
 Summary:	Command for manipulating access control lists
 Name:		acl
 Version:	2.3.1
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		System/Kernel and hardware
 URL:		http://savannah.nongnu.org/projects/acl
