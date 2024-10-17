@@ -8,7 +8,7 @@ Version:	2.3.2
 Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
-URL:		http://savannah.nongnu.org/projects/acl
+URL:		https://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.xz
 Source2:	%{name}.rpmlintrc
 Patch0:		acl-2.2.51-l10n-ru.patch
