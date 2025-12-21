@@ -12,6 +12,8 @@ URL:		https://savannah.nongnu.org/projects/acl
 Source0:	http://download.savannah.gnu.org/releases/%{name}/%{name}-%{version}.tar.xz
 Source2:	%{name}.rpmlintrc
 Patch0:		acl-2.2.51-l10n-ru.patch
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	pkgconfig(libattr)
 BuildRequires:	autoconf
 BuildRequires:	automake
